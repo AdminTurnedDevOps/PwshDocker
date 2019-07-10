@@ -1,3 +1,4 @@
+Set-StrictMode -Version latest
 function Get-DockerImage {
     [cmdletbinding(DefaultParameterSetName = 'PullDockerImage', ConfirmImpact = 'low')]
     param(
