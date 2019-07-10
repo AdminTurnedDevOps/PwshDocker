@@ -1,5 +1,22 @@
 Set-StrictMode -Version latest
+
 function Get-DockerImage {
+    [cmdletbinding()]
+    param(
+        [parameter(Position = 0,
+            Mandatory,
+            HelpMessage = 'Please enter the docker image you wish to search for on your local machine',
+            ValueFromPipeline = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$dockerImage
+    )
+    begin { }
+    process { docker image ls $dockerImage }
+    end { }
+   
+}
+
+function Pull-DockerImage {
     [cmdletbinding(DefaultParameterSetName = 'PullDockerImage', ConfirmImpact = 'low')]
     param(
         [parameter(Position = 0,
@@ -39,7 +56,7 @@ function Get-DockerImage {
         }
     }
 
-    process { 
+    process {
         if ($PSBoundParameters.ContainsKey('image')) {
             if ($image -like "*microsoft*") {
                 Write-Output 'Pulling down Windows image'
