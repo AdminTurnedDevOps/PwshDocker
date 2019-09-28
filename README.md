@@ -1,3 +1,6 @@
+# [WIP]
+This module is a work in progress. Feel free to reach out if you have any feedback or would like to be a contributor.
+
 # PwshDocker
 PwshDocker is a PowerShell wrapper around the Docker API
 
