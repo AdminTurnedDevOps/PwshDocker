@@ -1,5 +1,12 @@
 Set-StrictMode -Version latest
 
+
+function Get-DockerLogs {
+    [cmdletbining(SupportsShouldProcess, ConfirmImpact = 'low')]
+    param(
+        
+    )
+}
 function Run-DockerImage {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
     param(
