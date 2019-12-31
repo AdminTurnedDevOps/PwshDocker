@@ -1,11 +1,8 @@
 Set-StrictMode -Version latest
 
-
 function Get-DockerLogs {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
-    param(
-        
-    )
+    param()
 
     begin {
         $getVersion = docker --version
@@ -33,18 +30,27 @@ function Get-DockerLogs {
             }
         }
     }
-    process{
-        Write-Output 'Retrieving containers with container IDs'
-        docker container ls
-        sleep 3
+    process {
+        try {
+            $dock = docker container ls --no-trunc --format "{{json .}}"
+            $out = $dock | ConvertFrom-Json
 
-        $containerID = Read-Host 'Please enter a container ID from the list above'
-        Pause
+            if (-not($out)) { Write-Warning 'No containers are running...' }
 
-        docker logs $containerID
+            else {
+                Write-Output 'Retrieving containers with container IDs'
+                $out | select -ExpandProperty Names
+                sleep 3
+                $containerName = Read-Host 'Please enter a container name from the list above'    
+                docker logs --details $containerName
+            }
+        }
+        catch {
+            Write-Warning 'An error has occurred'
+            $PSCmdlet.ThrowTerminatingError($_)
+        }
     }
-
-    end{}
+    end { }
 }
 function Run-DockerImage {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
@@ -102,13 +108,13 @@ function Run-DockerImage {
     }
     process {
         try {
-        docker run -d $imageName -p $containerPort --name $containerName $command
+            docker run -d $imageName -p $containerPort --name $containerName $command
         }
 
         catch {
             Write-Warning 'An error has occurred'
             $PSCmdlet.ThrowTerminatingError($_)
-            }
+        }
         
     }
     end { 
