@@ -15,14 +15,25 @@ function Get-DockerLogs {
             
                 "1" { 
                     if ($IsWindows -like "*True*") {
+                        Write-Output 'Opening Docker for Windows browser...'
                         start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
                         Pause
+                    }
+
+                    if ($IsMacOS -like "*True*") {
+                        Write-Output 'Opening Docker for OS X...'
+                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Pause
+                }
+
+                    elseif ($IsLinux -like "*True*") {
+                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                        pause
                         exit
                     }
-                }
+            }
                 "2" {
-                    if ($IsMacOS -like "*True*") {
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Write-Warning 'Exiting...'
                         Pause
                         exit
                     } 
@@ -91,19 +102,30 @@ function Run-DockerImage {
             
                 "1" { 
                     if ($IsWindows -like "*True*") {
+                        Write-Output 'Opening Docker for Windows browser...'
                         start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
                         Pause
+                    }
+
+                    if ($IsMacOS -like "*True*") {
+                        Write-Output 'Opening Docker for OS X...'
+                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Pause
+                }
+
+                    elseif ($IsLinux -like "*True*") {
+                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                        pause
                         exit
                     }
-                }
+            }
                 "2" {
-                    if ($IsMacOS -like "*True*") {
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Write-Warning 'Exiting...'
                         Pause
                         exit
                     } 
-                }            
-            }
+                }
+
         }
     }
     process {
@@ -142,19 +164,29 @@ function Get-DockerImage {
             
                 "1" { 
                     if ($IsWindows -like "*True*") {
+                        Write-Output 'Opening Docker for Windows browser...'
                         start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
                         Pause
+                    }
+
+                    if ($IsMacOS -like "*True*") {
+                        Write-Output 'Opening Docker for OS X...'
+                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Pause
+                }
+
+                    elseif ($IsLinux -like "*True*") {
+                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                        pause
                         exit
                     }
-                }
+            }
                 "2" {
-                    if ($IsMacOS -like "*True*") {
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Write-Warning 'Exiting...'
                         Pause
                         exit
                     } 
-                }            
-            }
+                }
         }
     }
     process { docker image ls $dockerImage }
@@ -186,19 +218,29 @@ function Pull-DockerImage {
             
                 "1" { 
                     if ($IsWindows -like "*True*") {
+                        Write-Output 'Opening Docker for Windows browser...'
                         start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
                         Pause
+                    }
+
+                    if ($IsMacOS -like "*True*") {
+                        Write-Output 'Opening Docker for OS X...'
+                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Pause
+                }
+
+                    elseif ($IsLinux -like "*True*") {
+                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                        pause
                         exit
                     }
-                }
+            }
                 "2" {
-                    if ($IsMacOS -like "*True*") {
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                        Write-Warning 'Exiting...'
                         Pause
                         exit
                     } 
-                }            
-            }
+                }
         }
     }
 
