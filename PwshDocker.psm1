@@ -40,7 +40,6 @@ function Get-DockerLogs {
                 }            
             }
         }
-    }
     process {
         try {
             $dock = docker container ls --no-trunc --format "{{json .}}"
