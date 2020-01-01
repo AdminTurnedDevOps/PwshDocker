@@ -192,7 +192,7 @@ function Get-DockerImage {
         $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
         $imgOut = $img | ConvertFrom-Json
 
-        if (-not ($imgOut)) {Write-Warning "No images with name: $dockerImage"}
+        if (-not ($imgOut)) { Write-Warning "No images with name: $dockerImage" }
 
         else {
             Write-Output "Retrieving image names with name: $dockerImage"
@@ -255,27 +255,31 @@ function Pull-DockerImage {
 
     process {
         if ($PSBoundParameters.ContainsKey('image')) {
-            if ($image -like "*microsoft*") {
-                Write-Output 'Pulling down Windows image'
-                docker pull $image
-            }
+            try {
+                if ($image -like "*microsoft*") {
+                    Write-Output 'Pulling down Windows image'
+                    docker pull $image
+                }
 
-            if ($image -like "*ubuntu*") {
-                Write-Output "Pulling down Ubuntu image"
-                docker pull $image
-            }
+                if ($image -like "*ubuntu*") {
+                    Write-Output "Pulling down Ubuntu image"
+                    docker pull $image
+                }
 
-            if ($image -like "*centos*") {
-                Write-Output "Pulling down Centos image"
-                docker pull $image
-            }
+                if ($image -like "*centos*") {
+                    Write-Output "Pulling down Centos image"
+                    docker pull $image
+                }
 
-            else {
-                Write-Output 'Pulling down Docker image'
-                docker pull $image
+                else {
+                    Write-Output 'Pulling down Docker image'
+                    docker pull $image
+                }
+            }
+            catch {
+                $PSCmdlet.ThrowTerminatingError($_)
             }
         }
     }
-
     end { }
 }
