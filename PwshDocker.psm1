@@ -24,22 +24,22 @@ function Get-DockerLogs {
                         Write-Output 'Opening Docker for OS X...'
                         start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
                         Pause
-                }
+                    }
 
                     elseif ($IsLinux -like "*True*") {
                         Write-Output 'Please install the Docker package best suited for your Linux distro...'
                         pause
                         exit
                     }
-            }
+                }
                 "2" {
-                        Write-Warning 'Exiting...'
-                        Pause
-                        exit
-                    } 
-                }            
-            }
+                    Write-Warning 'Exiting...'
+                    Pause
+                    exit
+                } 
+            }            
         }
+    }
     process {
         try {
             $dock = docker container ls --no-trunc --format "{{json .}}"
@@ -110,20 +110,20 @@ function Run-DockerImage {
                         Write-Output 'Opening Docker for OS X...'
                         start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
                         Pause
-                }
+                    }
 
                     elseif ($IsLinux -like "*True*") {
                         Write-Output 'Please install the Docker package best suited for your Linux distro...'
                         pause
                         exit
                     }
-            }
-                "2" {
-                        Write-Warning 'Exiting...'
-                        Pause
-                        exit
-                    } 
                 }
+                "2" {
+                    Write-Warning 'Exiting...'
+                    Pause
+                    exit
+                } 
+            }
 
         }
     }
@@ -172,23 +172,33 @@ function Get-DockerImage {
                         Write-Output 'Opening Docker for OS X...'
                         start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
                         Pause
-                }
+                    }
 
                     elseif ($IsLinux -like "*True*") {
                         Write-Output 'Please install the Docker package best suited for your Linux distro...'
                         pause
                         exit
                     }
-            }
-                "2" {
-                        Write-Warning 'Exiting...'
-                        Pause
-                        exit
-                    } 
                 }
+                "2" {
+                    Write-Warning 'Exiting...'
+                    Pause
+                    exit
+                } 
+            }
         }
     }
-    process { docker image ls $dockerImage }
+    process { 
+        $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
+        $imgOut = $img | ConvertFrom-Json
+
+        if (-not ($imgOut)) {Write-Warning "No images with name: $dockerImage"}
+
+        else {
+            Write-Output "Retrieving image names with name: $dockerImage"
+            $imgOut
+        }
+    }
     end { }
    
 }
@@ -226,20 +236,20 @@ function Pull-DockerImage {
                         Write-Output 'Opening Docker for OS X...'
                         start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
                         Pause
-                }
+                    }
 
                     elseif ($IsLinux -like "*True*") {
                         Write-Output 'Please install the Docker package best suited for your Linux distro...'
                         pause
                         exit
                     }
-            }
-                "2" {
-                        Write-Warning 'Exiting...'
-                        Pause
-                        exit
-                    } 
                 }
+                "2" {
+                    Write-Warning 'Exiting...'
+                    Pause
+                    exit
+                } 
+            }
         }
     }
 
