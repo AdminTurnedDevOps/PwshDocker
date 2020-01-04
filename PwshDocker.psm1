@@ -113,8 +113,7 @@ function Get-DockerImage {
         [ValidateNotNullOrEmpty()]
         [string]$dockerImage
     )
-    begin {
-    }
+    begin { }
     process {
         try { 
             $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
