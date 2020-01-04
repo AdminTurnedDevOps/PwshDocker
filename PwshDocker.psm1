@@ -1,39 +1,39 @@
 Set-StrictMode -Version latest
 
 $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
+if (-not ($getVersion)) {
+    Write-Warning 'Docker is not installed'
+    Write-Output 'Would you like to be directed to where you can download Docker?'
+    $download = Read-Host 'Type 1 for yes or 2 for no'
 
-            switch ($download) {
+    switch ($download) {
             
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
+        "1" { 
+            if ($IsWindows -like "*True*") {
+                Write-Output 'Opening Docker for Windows browser...'
+                start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
+                Pause
+            }
 
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
+            if ($IsMacOS -like "*True*") {
+                Write-Output 'Opening Docker for OS X...'
+                start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                Pause
+            }
 
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }            
+            elseif ($IsLinux -like "*True*") {
+                Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                pause
+                exit
+            }
         }
+        "2" {
+            Write-Warning 'Exiting...'
+            Pause
+            exit
+        } 
+    }            
+}
 
 function Get-DockerLogs {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
@@ -187,9 +187,25 @@ function Tag-DockerImage {
     param(
         [parameter(Mandatory,
             Position = 0,
-            HelpMessage = 'Please put the name of the source image that you wish to tag')]
-        [alias('Image')]
-        [ValueFromPipeline()]
-        [string]$sourceImage
+            HelpMessage = 'Please put the desired name of your tag for your source image')]
+        [string]$tagName
     )
+
+    begin { }
+
+    process {
+        $dock = docker image ls --no-trunc --format "{{json .}}"
+        $out = $dock | ConvertFrom-Json
+
+        if (-not($out)) { Write-Warning 'No images exist...' }
+
+        else {
+            Write-Output 'Retrieving image names'
+            $out | select Repository, Tag | fl
+            sleep 3
+            $sourceImage = Read-Host 'Please enter a name and tag from the listed docker images above that you would like to tag'    
+            docker tag $sourceImage $tagName
+        }        
+    }
+    end { }
 }
