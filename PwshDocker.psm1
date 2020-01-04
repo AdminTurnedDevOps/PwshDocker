@@ -62,7 +62,7 @@ function Get-DockerLogs {
     }
     end { }
 }
-function Run-DockerImage {
+function Run-DockerContainer {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
     param(
         [parameter(Position = 0,
