@@ -39,8 +39,7 @@ function Get-DockerLogs {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
     param()
 
-    begin {
-    }
+    begin { }
     process {
         try {
             $dock = docker container ls --no-trunc --format "{{json .}}"
@@ -91,8 +90,7 @@ function Run-DockerImage {
         [string]$command = '/bin/bash'
     )
     
-    begin {
-    }
+    begin { }
     process {
         try {
             docker run -d $imageName -p $containerPort --name $containerName $command
@@ -101,12 +99,9 @@ function Run-DockerImage {
         catch {
             Write-Warning 'An error has occurred'
             $PSCmdlet.ThrowTerminatingError($_)
-        }
-        
+        }       
     }
-    end { 
-
-    }
+    end { }
 }
 function Get-DockerImage {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
@@ -120,19 +115,25 @@ function Get-DockerImage {
     )
     begin {
     }
-    process { 
-        $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
-        $imgOut = $img | ConvertFrom-Json
+    process {
+        try { 
+            $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
+            $imgOut = $img | ConvertFrom-Json
 
-        if (-not ($imgOut)) { Write-Warning "No images with name: $dockerImage" }
+            if (-not ($imgOut)) { Write-Warning "No images with name: $dockerImage" }
 
-        else {
-            Write-Output "Retrieving image names with name: $dockerImage"
-            $imgOut
+            else {
+                Write-Output "Retrieving image names with name: $dockerImage"
+                $imgOut
+            }
+        }
+
+        catch {
+            Write-Warning 'An error has occured'
+            $PSCmdlet.ThrowTerminatingError($_)
         }
     }
-    end { }
-   
+    end { }   
 }
 
 function Pull-DockerImage {
@@ -148,8 +149,7 @@ function Pull-DockerImage {
         [string]$image
     )
 
-    begin {
-    }
+    begin { }
 
     process {
         if ($PSBoundParameters.ContainsKey('image')) {
@@ -209,7 +209,7 @@ function Tag-DockerImage {
             }
         }
         catch {
-            Write-Warning 'An error has occurred'
+            Write-Warning 'An error has occured'
             $PSCmdlet.ThrowTerminatingError($_)
         }        
     }
