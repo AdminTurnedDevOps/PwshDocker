@@ -1,11 +1,6 @@
 Set-StrictMode -Version latest
 
-function Get-DockerLogs {
-    [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
-    param()
-
-    begin {
-        $getVersion = docker --version
+$getVersion = docker --version
         if (-not ($getVersion)) {
             Write-Warning 'Docker is not installed'
             Write-Output 'Would you like to be directed to where you can download Docker?'
@@ -39,6 +34,12 @@ function Get-DockerLogs {
                 } 
             }            
         }
+
+function Get-DockerLogs {
+    [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
+    param()
+
+    begin {
     }
     process {
         try {
@@ -91,41 +92,6 @@ function Run-DockerImage {
     )
     
     begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }
-
-        }
     }
     process {
         try {
@@ -153,40 +119,6 @@ function Get-DockerImage {
         [string]$dockerImage
     )
     begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }
-        }
     }
     process { 
         $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
@@ -217,40 +149,6 @@ function Pull-DockerImage {
     )
 
     begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }
-        }
     }
 
     process {
@@ -282,4 +180,16 @@ function Pull-DockerImage {
         }
     }
     end { }
+}
+
+function Tag-DockerImage {
+    [cmdletbinding(ConfirmImpact = 'low')]
+    param(
+        [parameter(Mandatory,
+            Position = 0,
+            HelpMessage = 'Please put the name of the source image that you wish to tag')]
+        [alias('Image')]
+        [ValueFromPipeline()]
+        [string]$sourceImage
+    )
 }
