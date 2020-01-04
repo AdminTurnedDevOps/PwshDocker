@@ -194,17 +194,23 @@ function Tag-DockerImage {
     begin { }
 
     process {
-        $dock = docker image ls --no-trunc --format "{{json .}}"
-        $out = $dock | ConvertFrom-Json
+        try {
+            $dock = docker image ls --no-trunc --format "{{json .}}"
+            $out = $dock | ConvertFrom-Json
 
-        if (-not($out)) { Write-Warning 'No images exist...' }
+            if (-not($out)) { Write-Warning 'No images exist...' }
 
-        else {
-            Write-Output 'Retrieving image names'
-            $out | select Repository, Tag | fl
-            sleep 3
-            $sourceImage = Read-Host 'Please enter a name and tag from the listed docker images above that you would like to tag'    
-            docker tag $sourceImage $tagName
+            else {
+                Write-Output 'Retrieving image names'
+                $out | select Repository, Tag | fl
+                sleep 3
+                $sourceImage = Read-Host 'Please enter a name and tag from the listed docker images above that you would like to tag'    
+                docker tag $sourceImage $tagName
+            }
+        }
+        catch {
+            Write-Warning 'An error has occurred'
+            $PSCmdlet.ThrowTerminatingError($_)
         }        
     }
     end { }
