@@ -1,45 +1,45 @@
 Set-StrictMode -Version latest
 
+$getVersion = docker --version
+if (-not ($getVersion)) {
+    Write-Warning 'Docker is not installed'
+    Write-Output 'Would you like to be directed to where you can download Docker?'
+    $download = Read-Host 'Type 1 for yes or 2 for no'
+
+    switch ($download) {
+            
+        "1" { 
+            if ($IsWindows -like "*True*") {
+                Write-Output 'Opening Docker for Windows browser...'
+                start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
+                Pause
+            }
+
+            if ($IsMacOS -like "*True*") {
+                Write-Output 'Opening Docker for OS X...'
+                start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
+                Pause
+            }
+
+            elseif ($IsLinux -like "*True*") {
+                Write-Output 'Please install the Docker package best suited for your Linux distro...'
+                pause
+                exit
+            }
+        }
+        "2" {
+            Write-Warning 'Exiting...'
+            Pause
+            exit
+        } 
+    }            
+}
+
 function Get-DockerLogs {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
     param()
 
-    begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }            
-        }
-    }
+    begin { }
     process {
         try {
             $dock = docker container ls --no-trunc --format "{{json .}}"
@@ -90,43 +90,7 @@ function Run-DockerContainer {
         [string]$command = '/bin/bash'
     )
     
-    begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }
-
-        }
-    }
+    begin { }
     process {
         try {
             docker run -d $imageName -p $containerPort --name $containerName $command
@@ -135,12 +99,9 @@ function Run-DockerContainer {
         catch {
             Write-Warning 'An error has occurred'
             $PSCmdlet.ThrowTerminatingError($_)
-        }
-        
+        }       
     }
-    end { 
-
-    }
+    end { }
 }
 function Get-DockerImage {
     [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'low')]
@@ -152,55 +113,26 @@ function Get-DockerImage {
         [ValidateNotNullOrEmpty()]
         [string]$dockerImage
     )
-    begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
+    begin { }
+    process {
+        try { 
+            $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
+            $imgOut = $img | ConvertFrom-Json
 
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
+            if (-not ($imgOut)) { Write-Warning "No images with name: $dockerImage" }
 
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
+            else {
+                Write-Output "Retrieving image names with name: $dockerImage"
+                $imgOut
             }
         }
-    }
-    process { 
-        $img = docker image ls "*$dockerImage*" --no-trunc --format "{{json .}}"
-        $imgOut = $img | ConvertFrom-Json
 
-        if (-not ($imgOut)) { Write-Warning "No images with name: $dockerImage" }
-
-        else {
-            Write-Output "Retrieving image names with name: $dockerImage"
-            $imgOut
+        catch {
+            Write-Warning 'An error has occured'
+            $PSCmdlet.ThrowTerminatingError($_)
         }
     }
-    end { }
-   
+    end { }   
 }
 
 function Pull-DockerImage {
@@ -216,42 +148,7 @@ function Pull-DockerImage {
         [string]$image
     )
 
-    begin {
-        $getVersion = docker --version
-        if (-not ($getVersion)) {
-            Write-Warning 'Docker is not installed'
-            Write-Output 'Would you like to be directed to where you can download Docker?'
-            $download = Read-Host 'Type 1 for yes or 2 for no'
-
-            switch ($download) {
-            
-                "1" { 
-                    if ($IsWindows -like "*True*") {
-                        Write-Output 'Opening Docker for Windows browser...'
-                        start microsoft-edge:https://docs.docker.com/docker-for-windows/install/
-                        Pause
-                    }
-
-                    if ($IsMacOS -like "*True*") {
-                        Write-Output 'Opening Docker for OS X...'
-                        start-process -FilePath '/Applications/Safari.app' -ArgumentList 'https://docs.docker.com/docker-for-mac/install/'
-                        Pause
-                    }
-
-                    elseif ($IsLinux -like "*True*") {
-                        Write-Output 'Please install the Docker package best suited for your Linux distro...'
-                        pause
-                        exit
-                    }
-                }
-                "2" {
-                    Write-Warning 'Exiting...'
-                    Pause
-                    exit
-                } 
-            }
-        }
-    }
+    begin { }
 
     process {
         if ($PSBoundParameters.ContainsKey('image')) {
@@ -280,6 +177,40 @@ function Pull-DockerImage {
                 $PSCmdlet.ThrowTerminatingError($_)
             }
         }
+    }
+    end { }
+}
+
+function Tag-DockerImage {
+    [cmdletbinding(ConfirmImpact = 'low')]
+    param(
+        [parameter(Mandatory,
+            Position = 0,
+            HelpMessage = 'Please put the desired name of your tag for your source image')]
+        [string]$tagName
+    )
+
+    begin { }
+
+    process {
+        try {
+            $dock = docker image ls --no-trunc --format "{{json .}}"
+            $out = $dock | ConvertFrom-Json
+
+            if (-not($out)) { Write-Warning 'No images exist...' }
+
+            else {
+                Write-Output 'Retrieving image names'
+                $out | select Repository, Tag | fl
+                sleep 3
+                $sourceImage = Read-Host 'Please enter a name and tag from the listed docker images above that you would like to tag'    
+                docker tag $sourceImage $tagName
+            }
+        }
+        catch {
+            Write-Warning 'An error has occured'
+            $PSCmdlet.ThrowTerminatingError($_)
+        }        
     }
     end { }
 }
