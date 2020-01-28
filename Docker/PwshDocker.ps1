@@ -277,5 +277,6 @@ Function Get-DockerSecret {
             Name = $out.Name
             UpdatedAt = $out.UpdatedAt
         }
+        $obj
     }
 }
