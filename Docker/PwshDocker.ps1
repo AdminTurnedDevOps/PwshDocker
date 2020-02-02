@@ -277,9 +277,6 @@ Function Get-DockerSecret {
             Name = $out.Name
             UpdatedAt = $out.UpdatedAt
         }
-        
-        #$obj
-        $obj | Add-Member -MemberType ScriptProperty -Name DockerSecretName -Value { $dock = docker secret ls --format "{{json .}}"; $out = $dock | ConvertFrom-Json; $out.name }
-        
+        $obj
     }
 }
