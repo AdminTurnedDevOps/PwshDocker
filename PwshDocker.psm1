@@ -8,6 +8,7 @@ foreach($import in @($Docker))
     }
     catch
     {
+        Write-Warning 'An error has occurred'
         $PSCmdlet.ThrowTerminatingError($_)
     }
 }
