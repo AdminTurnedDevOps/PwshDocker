@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# DockerContainer-Exec
+# Exec-DockerContainer
 
 ## SYNOPSIS
 Exec into a running Docker container
