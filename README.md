@@ -1,3 +1,5 @@
+[](https://i.imgur.com/bnru0X0.png)
+
 # PwshDocker
 PwshDocker is a PowerShell wrapper around the Docker CLI
 
