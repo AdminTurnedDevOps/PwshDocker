@@ -13,7 +13,7 @@ Exec into a running Docker container
 ## SYNTAX
 
 ```
-DockerContainer-Exec [-command] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+Exec-DockerContainer [-command] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
