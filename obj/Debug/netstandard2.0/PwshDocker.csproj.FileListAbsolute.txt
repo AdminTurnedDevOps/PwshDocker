@@ -1,9 +1,0 @@
-C:\Users\Mike\Desktop\workspace\PwshDocker\bin\Debug\netstandard2.0\PwshDocker.deps.json
-C:\Users\Mike\Desktop\workspace\PwshDocker\bin\Debug\netstandard2.0\PwshDocker.dll
-C:\Users\Mike\Desktop\workspace\PwshDocker\bin\Debug\netstandard2.0\PwshDocker.pdb
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.csprojAssemblyReference.cache
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.csproj.CoreCompileInputs.cache
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.AssemblyInfoInputs.cache
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.AssemblyInfo.cs
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.dll
-C:\Users\Mike\Desktop\workspace\PwshDocker\obj\Debug\netstandard2.0\PwshDocker.pdb
