@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Exec-DockerContainer
+# New-DockerSecret
 
 ## SYNOPSIS
 Create a new secret for a Docker Swarm cluster
@@ -13,7 +13,7 @@ Create a new secret for a Docker Swarm cluster
 ## SYNTAX
 
 ```
-Exec-DockerContainer [-name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+New-DockerSecret [-name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

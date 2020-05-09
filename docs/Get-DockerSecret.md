@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Exec-DockerContainer
+# Get-DockerSecret
 
 ## SYNOPSIS
 Retrieves Docker secrets from a Docker Swarm cluster
