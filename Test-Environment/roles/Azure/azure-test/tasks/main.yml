@@ -43,10 +43,6 @@
     public_ip_name: "{{ publicIP }}"
     security_group: "{{ nsg }}"
 
-- name: Read SSH key contents
-  with_file: "{{ keyPath }}"
-  register: ssh_public_key
-
 - name: Virtual Machine Creation
   azure_rm_virtualmachine:
     resource_group: "{{ resourceGroupName }}"
@@ -56,7 +52,7 @@
     ssh_password_enabled: false
     ssh_public_keys:
       - path: /home/{{ username }}/.ssh/authorized_keys
-        key_data: "{{ ssh_public_key }}"
+        key_data: "{{ lookup('file', {{ keyPath }}) }}"
     network_interfaces: "{{ nicName }}"
     image:
       offer: UbuntuServer
