@@ -11,4 +11,4 @@ nicName: pwshdocker-nic
 vmName: pwshdocker-vm
 username: pwshdockeruser
 ssh_public_keys: /home/pwshdockeruser
-keyPath: ~/.ssh/id_rsa.pub
+keyPath: /Users/michael/.ssh/id_rsa.pub
