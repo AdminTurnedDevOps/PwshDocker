@@ -63,4 +63,4 @@
 - name: Clone Git Repo To Home
   git:
     repo: "https://github.com/AdminTurnedDevOps/PwshDocker.git"
-    dest: /home/"{{ username }}"
+    dest: "/home/"{{ username }}""
