@@ -17,5 +17,6 @@ In Azure:
     - Network Security Group that Allows SSH to Port 22
     - Virtual Machine NIC
     - The Virtual Machine
+    - Install PowerShell Core
     - Installation of Docker To Test The PwshDocker Module
     - The PwshModule Copied to `/home`
