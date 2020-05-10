@@ -32,7 +32,7 @@
     resource_group: "{{ resourceGroupName }}"
     name: "{{ nsg }}"
     rules:
-      - name: Allow SSH From Anywhere
+      - name: allow-ssh
         protocol: Tcp
         destination_port_range: 22
         access: Allow
