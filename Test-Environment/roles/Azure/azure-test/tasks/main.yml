@@ -57,7 +57,7 @@
     image:
       offer: UbuntuServer
       publisher: Canonical
-      sku: 18.04
+      sku: 18.04-LTS
       version: latest
 
 - name: Clone Git Repo To Home
