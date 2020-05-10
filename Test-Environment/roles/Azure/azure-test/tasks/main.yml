@@ -51,7 +51,7 @@
     admin_username: "{{ username }}"
     ssh_password_enabled: false
     ssh_public_keys:
-      - path: /home/"{{ username }}"/.ssh/authorized_keys
+      - path: /home/{{ username }}/.ssh/authorized_keys
         key_data: "{{ keyPath }}"
     network_interfaces: "{{ nicName }}"
     image:
