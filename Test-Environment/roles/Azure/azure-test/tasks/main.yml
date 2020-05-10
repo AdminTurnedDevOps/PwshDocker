@@ -13,7 +13,7 @@
   azure_rm_subnet:
     resource_group: "{{ resourceGroupName }}"
     name: "{{ subnetName }}"
-    address_prefixe: "{{ subnet }}"
+    address_prefix: "{{ subnet }}"
     virtual_network: "{{ vNetName }}"
 
 - name: Public IP Creation
