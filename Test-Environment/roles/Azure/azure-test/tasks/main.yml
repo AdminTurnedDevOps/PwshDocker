@@ -55,9 +55,9 @@
         key_data: "{{ keyPath }}"
     network_interfaces: "{{ nicName }}"
     image:
-      offer:
-      publisher: Ubuntu
-      sku: "18.04"
+      offer: UbuntuServer
+      publisher: Canonical
+      sku: "18.04
       version: latest
 
 - name: Clone Git Repo to /home/"{{ username }}"
