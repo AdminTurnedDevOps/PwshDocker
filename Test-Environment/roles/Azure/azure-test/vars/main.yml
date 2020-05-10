@@ -11,4 +11,4 @@ nicName: pwshdocker-nic
 vmName: pwshdocker-vm
 username: pwshdockeruser
 ssh_public_keys: /home/pwshdockeruser
-keyPath: /Users/michael/.ssh/id_rsa.pub
+keyPath: "{{ lookup('file', '/Users/michael/.ssh/id_rsa.pub') }}"
