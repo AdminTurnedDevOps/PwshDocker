@@ -23,8 +23,6 @@
     name: "{{ publicIP }}"
   register: publicIP
 
-- debug: msg="{{ publicIP.stdout }}"
-
 - name: Network Security Group Creation
   azure_rm_securitygroup:
     resource_group: "{{ resourceGroupName }}"
