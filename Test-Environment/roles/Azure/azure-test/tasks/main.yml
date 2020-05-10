@@ -21,7 +21,6 @@
     resource_group: "{{ resourceGroupName }}"
     allocation_method: Dynamic
     name: "{{ publicIP }}"
-  register: publicIP
 
 - name: Network Security Group Creation
   azure_rm_securitygroup:
