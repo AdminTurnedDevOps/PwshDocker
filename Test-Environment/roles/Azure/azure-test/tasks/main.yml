@@ -60,7 +60,7 @@
       sku: "18.04
       version: latest
 
-- name: Clone Git Repo to /home/"{{ username }}"
+- name: Clone Git Repo To Home
   git:
     repo: "https://github.com/AdminTurnedDevOps/PwshDocker.git"
     dest: /home/"{{ username }}"
