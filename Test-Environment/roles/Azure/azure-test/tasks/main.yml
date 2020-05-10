@@ -47,7 +47,7 @@
   azure_rm_virtualmachine:
     resource_group: "{{ resourceGroupName }}"
     name: "{{ vmName }}"
-    vm_size: Standard_B2S
+    vm_size: Standard_B4ms
     admin_username: "{{ username }}"
     ssh_password_enabled: false
     ssh_public_keys:
