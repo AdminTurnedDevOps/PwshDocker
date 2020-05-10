@@ -52,7 +52,7 @@
     ssh_password_enabled: false
     ssh_public_keys:
       - path: /home/{{ username }}/.ssh/authorized_keys
-        key_data: "{{ lookup('file', {{ keyPath }}) }}"
+        key_data: "{{ keyPath }}"
     network_interfaces: "{{ nicName }}"
     image:
       offer: UbuntuServer
