@@ -20,7 +20,7 @@
   azure_rm_publicipaddress:
     resource_group: "{{ resourceGroupName }}"
     allocation_method: Dynamic
-    name: publicIP
+    name: "{{ publicIP }}"
   register: publicIP
 
 - name: Show Public IP Address
