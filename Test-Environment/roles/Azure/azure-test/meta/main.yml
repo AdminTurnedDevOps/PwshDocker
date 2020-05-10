@@ -1,7 +1,6 @@
 galaxy_info:
-  author: your name
-  description: your role description
-  company: your company (optional)
+  role_name: azure-test
+  author: Michael Levan
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

@@ -1,0 +1,14 @@
+---
+resourceGroupName: pwshdocker
+location: eastus
+vNetName: pwshdocker-vnet
+CIDR: 10.0.0.0/16
+subnetName: pwshdocker-subnet
+subnet: 10.0.5.0/24
+publicIP: pwshdocker-publicip
+nsg: pwshdocker-nsg
+nicName: pwshdocker-nic
+vmName: pwshdocker-vm
+username: pwshdockeruser
+ssh_public_keys: /home/pwshdockeruser
+keyPath: ~/.ssh/id_rsa.pub

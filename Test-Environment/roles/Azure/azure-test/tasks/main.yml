@@ -1,0 +1,71 @@
+- name: Resource Group Creation
+  azure_rm_resourcegroup:
+    name: "{{ resourceGroupName }}"
+    location: "{{ location }}"
+
+- name: Virtual Network (vNet) Creation
+  azure_rm_virtualnetwork:
+    resource_group: "{{ resourceGroupName }}"
+    name: "{{ vNetName }}"
+    address_prefixes: "{{ CIDR }}"
+
+- name: Subnet Creation
+  azure_rm_subnet:
+    resource_group: "{{ resourceGroupName }}"
+    name: "{{ subnetName }}"
+    address_prefixe: "{{ subnet }}"
+    virtual_network: "{{ vNetName }}"
+
+- name: Public IP Creation
+  azure_rm_publicipaddress:
+    resource_group: "{{ resourceGroupName }}"
+    allocation_method: Dynamic
+    name: publicIP
+  register: publicIP
+
+- name: Show Public IP Address
+  debug:
+    msg: "{{ publicIP.state.ip_address }}"
+
+- name: Network Security Group Creation
+  azure_rm_securitygroup:
+    resource_group: "{{ resourceGroupName }}"
+    name: "{{ nsg }}"
+    rules:
+      - name: Allow SSH From Anywhere
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
+
+- name: vNIC Creation
+  azure_rm_networkinterface:
+    resource_group: "{{ resourceGroupName }}"
+    name: "{{ nicName }}"
+    virtual_network: "{{ vNetName }}"
+    subnet: "{{ subnetName }}"
+    public_ip_name: "{{ publicIP }}"
+    security_group: "{{ nsg }}"
+
+- name: Virtual Machine Creation
+  azure_rm_virtualmachine:
+    resource_group: "{{ resourceGroupName }}"
+    name: "{{ vmName }}"
+    vm_size: Standard_B2S
+    admin_username: "{{ username }}"
+    ssh_password_enabled: false
+    ssh_public_keys:
+      - path: /home/"{{ username }}"/.ssh/authorized_keys
+        key_data: "{{ keyPath }}"
+    network_interfaces: "{{ nicName }}"
+    image:
+      offer:
+      publisher: Ubuntu
+      sku: "18.04"
+      version: latest
+
+- name: Clone Git Repo to /home/"{{ username }}"
+  git:
+    repo: "https://github.com/AdminTurnedDevOps/PwshDocker.git"
+    dest: /home/"{{ username }}"
