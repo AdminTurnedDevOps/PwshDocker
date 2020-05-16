@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Exec-DockerContainer
+# Delete-DockerImage
 
 ## SYNOPSIS
 Deletes one or multiple Docker containers
