@@ -8,7 +8,7 @@ schema: 2.0.0
 # Delete-DockerImage
 
 ## SYNOPSIS
-Deletes one or multiple Docker containers
+Deletes one or multiple Docker images
 
 ## SYNTAX
 
