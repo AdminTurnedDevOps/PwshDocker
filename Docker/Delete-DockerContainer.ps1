@@ -1,5 +1,5 @@
 function Delete-DockerContainer {
-    [cmdletbinding(ConfirmImpact = 'High', DefaultParameterSetName = 'deleteContainer')]
+    [cmdletbinding(SupportsShouldProcess, ConfirmImpact = 'High', DefaultParameterSetName = 'deleteContainer')]
     param(
         [parameter(Mandatory,
             ParameterSetName = 'deleteContainer',
