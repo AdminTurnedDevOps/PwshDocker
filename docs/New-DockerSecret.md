@@ -13,7 +13,7 @@ Create a new secret for a Docker Swarm cluster
 ## SYNTAX
 
 ```
-New-DockerSecret [-name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+New-DockerSecret [[-name] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,7 +67,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 0
 Default value: None
 Accept pipeline input: False
