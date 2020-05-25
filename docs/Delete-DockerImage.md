@@ -8,12 +8,12 @@ schema: 2.0.0
 # Delete-DockerImage
 
 ## SYNOPSIS
-Deletes one or multiple Docker containers
+Deletes one or multiple Docker images
 
 ## SYNTAX
 
 ```
-Delete-DockerImage [-image] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+Delete-DockerImage [-image] <String[]> [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,14 +63,14 @@ Accept wildcard characters: False
 List what docker image or images you would like to delete
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: dockerImage
 
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -85,5 +85,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object
 ## NOTES
+
+## RELATED LINKS
 
 ## RELATED LINKS

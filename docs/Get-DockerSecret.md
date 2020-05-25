@@ -13,7 +13,7 @@ Retrieves Docker secrets from a Docker Swarm cluster
 ## SYNTAX
 
 ```
-Get-DockerSecret [-name] <String> [-WhatIf] [-Confirm] [<CommonParameters>]
+Get-DockerSecret [[-name] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,7 +67,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 0
 Default value: None
 Accept pipeline input: False
